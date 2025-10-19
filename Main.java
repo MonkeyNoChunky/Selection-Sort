@@ -15,7 +15,6 @@ public class Main {
 
         printArray(array);
         selectionSort(array);
-        System.out.println();
         printArray(array); 
     }
 
@@ -23,19 +22,17 @@ public class Main {
     public static void swap(int index1, int index2, int[] array) {
         int placeHolder = array[index1];
         array[index1] = array[index2]; 
-        array[2] = placeHolder; 
+        array[index2] = placeHolder; 
     }
 
 
     static void selectionSort(int[] array) {
-        int lowestNum = 0; 
-        int lowestNumIndex = 0; 
+        int lowestNumIndex; 
         for(int i = 0; i < array.length - 1; i++) {
+            lowestNumIndex = i;
             for(int o = i + 1; o < array.length; o++) {
-                lowestNumIndex = o;
-                lowestNum = array[i];
-                if(array[o] < lowestNum) {
-                    lowestNum = array[o];
+                if(array[o] < array[lowestNumIndex]) {
+                    lowestNumIndex = o;
                 }
             }
             swap(i, lowestNumIndex, array);
@@ -46,5 +43,6 @@ public class Main {
         for(int i : array) {
             System.out.print(i + " ");
         }
+        System.out.println();
     }
 }
