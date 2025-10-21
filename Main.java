@@ -4,59 +4,56 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-
-        System.out.println("Please input the number of values in the list");
-        int arrayLength = scan.nextInt();
-        int[] array = new int[arrayLength];
-        System.out.println("How would you like to assign values?\n[1] Manual Edit\n[2] Automatic generator");
-
-        if(scan.nextInt() == 1) { 
-            for (int i = 0; i < arrayLength; i++) { 
-                System.out.println("Please insert your " + (i + 1) + " value"); 
-                array[i] = scan.nextInt();
-            }
-        } else {
-            generateRandomNumbers(array);
+        System.out.println("Please input number of values");
+        int arrayLength = scan.nextInt(); 
+        int[] array = new int[arrayLength]; // Creates a new array with the length of arrayLength, which was inputted by the user
+        System.out.println("Do you want to manually add the values, or have the randomly generated?\n[1] Manual Edit\n[2] Automatic generator"); 
+        int choice = scan.nextInt(); //Receives the input number from the user to understand their choice, must be an integer
+        if(choice == 1) { // If the user inputs 1 
+            for (int i = 0; i < arrayLength; i++) { // A for-loop which asks the user for a value a number of times, which is equal to the arrayLength variable, and adds it to the unsorted array 
+            System.out.println("Please insert your " + (i + 1) + " value"); 
+            array[i] = scan.nextInt(); 
+            } 
+        } else { // If number does not equal to 1(limits edge cases) 
+            createRandomInputNumbers(array); // Adds a list of randomized numbers from 0-1000 to the array. The number of values changes with the array length 
         }
-
-        printArray(array);
-        selectionSort(array);
+        printArray(array); // Calls the printArray method to print out the full unsorted array 
+        selectionSort(array); // Calls the sort algorithm
         printArray(array);
     }
 
-    // swaps the values of two elements of an array
-    static void swap(int index1, int index2, int[] array) {
+
+
+    public static void swap(int index1, int index2, int[] array) { // Method to swap 2 number's positions in an array
         int placeHolder = array[index1];
-        array[index1] = array[index2]; 
+        array[index1] = array[index2];
         array[index2] = placeHolder; 
     }
 
-    // repeatedly finds the smallest remaining element and swaps with the current index (i)
-    static void selectionSort(int[] array) {
-        int lowestNumIndex; // stores the position of the lowest number found
+
+    static void selectionSort(int[] array) { // Sorts the inputted array using the selection sort algorithm
+        int lowestNumIndex; // Variable to store the lowest number's position in a range 
         for(int i = 0; i < array.length - 1; i++) {
-            lowestNumIndex = i; // resetting lowestNumIndex after every selection scan
-            for(int o = i + 1; o < array.length; o++) {
-                if(array[o] < array[lowestNumIndex]) {
-                    lowestNumIndex = o; // assigning lowestNumIndex to a new lowest index found
+            lowestNumIndex = i; // Sets the position where the next lowest number will go to be i 
+            for(int o = i + 1; o < array.length; o++) { // Increments through a selected range, which is the value of the previous for loop plus one, so it will always check a smaller range as it proceeds
+                if(array[o] < array[lowestNumIndex]) { // Cbecks if the current index is smaller then the lowest number in the range
+                    lowestNumIndex = o; // Sets the lowestNumIndex value to be the value of the current index being checked in the range
                 }
             }
-            swap(i, lowestNumIndex, array); // swapping two elements to sort the array 
+            swap(i, lowestNumIndex, array); // Calls the swap method to swap the current lowest number in a range with the number located at the lowest index in the range
         }
     }
 
-    // prints all elements of an array seperated by a space
-    static void printArray(int[] array) {
-        for(int i : array) {
+    static void printArray(int[] array) { // This method prints out the values of the array by cycling through each index and printing its value
+        for(int i : array) { 
             System.out.print(i + " ");
         }
-        System.out.println();
     }
 
-    // assigns random values to an array
-    static void generateRandomNumbers(int[] array) { 
-        for(int i = 0; i < array.length; i++) {
-            array[i] = (int) (Math.random() * 1000); // possible values of 1 to 1000
+
+    public static void createRandomInputNumbers(int[] array) { // This method generates random numbers to be sorted, picks a value between 1 and 1000 for each value
+        for(int i = 0; i < array.length; i++) {  
+            array[i] = (int) ((Math.random() + 1) * 1000);
         }
     }
 }
